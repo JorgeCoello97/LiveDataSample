@@ -56,6 +56,7 @@ class MainViewModel : ViewModel() {
     }
     ```
 ___
+For preserve state livedata, we can do:
 ___
 * Using saveStateHandle passed as parameter (option 1) 
 ```
@@ -71,4 +72,18 @@ ___
         }
     }
 ```
+* Using saveStateHandle passed as parameter (option 2 - easiest) 
+```
+    class MainViewModel(state: SavedStateHandle) : ViewModel() {
+        
+        private val _count = state.getLiveData("count",0)
+        val count: LiveData<Int> get() = _count
+    
+    
+        fun incrementCount() {
+            _count.value = _count.value?.plus(1) ?: 1
+        }
+    }
+```
+
 
