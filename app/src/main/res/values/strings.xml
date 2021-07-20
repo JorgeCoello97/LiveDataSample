@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LiveDataSample</string>
+    <string name="default_counts">Counts: 0</string>
+    <string name="bttn_count">COUNT++</string>
+</resources>
