@@ -6,6 +6,7 @@
  Test about live data (View Models)
  
  ## Use Instructions
+ 
  * Gradle configuration
  ```Gradle
  def lifecycle_version = "2.4.0-alpha02"
@@ -54,3 +55,20 @@ class MainViewModel : ViewModel() {
         }
     }
     ```
+___
+___
+* Using saveStateHandle passed as parameter (option 1) 
+```
+    class MainViewModel(private val state: SavedStateHandle) : ViewModel() {
+        
+        private val _count = MutableLiveData(state["count"] ?: 0)
+        val count: LiveData<Int> get() = _count
+    
+    
+        fun incrementCount() {
+            _count.value = _count.value?.plus(1) ?: 1
+            state["count"] = _count.value
+        }
+    }
+```
+
