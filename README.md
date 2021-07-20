@@ -59,7 +59,7 @@ ___
 For preserve state livedata, we can do:
 ___
 * Using saveStateHandle passed as parameter (option 1) 
-```
+```kotlin
     class MainViewModel(private val state: SavedStateHandle) : ViewModel() {
         
         private val _count = MutableLiveData(state["count"] ?: 0)
@@ -73,7 +73,7 @@ ___
     }
 ```
 * Using saveStateHandle passed as parameter (option 2 - easiest) 
-```
+```kotlin
     class MainViewModel(state: SavedStateHandle) : ViewModel() {
         
         private val _count = state.getLiveData("count",0)
