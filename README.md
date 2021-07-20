@@ -33,7 +33,7 @@ class MainViewModel : ViewModel() {
 }
 ```
 
-* Activity that use ViewModel
+* Activity using ViewModel
     ```kotlin
     class MainActivity : AppCompatActivity() {
     
