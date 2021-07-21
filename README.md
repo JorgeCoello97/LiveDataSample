@@ -36,54 +36,54 @@ class MainViewModel : ViewModel() {
 ```
 
 * Activity using ViewModel
-    ```kotlin
-    class MainActivity : AppCompatActivity() {
-    
-        private val vm by viewModels<MainViewModel>()
-    
-        @SuppressLint("SetTextI18n")
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            val binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-    
-            binding.button.setOnClickListener { vm.incrementCount() }
-    
-            vm.count.observe(this, Observer {
-                binding.textView.text = "Counts: $it"
-            })
-        }
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private val vm by viewModels<MainViewModel>()
+
+    @SuppressLint("SetTextI18n")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.button.setOnClickListener { vm.incrementCount() }
+
+        vm.count.observe(this, Observer {
+            binding.textView.text = "Counts: $it"
+        })
     }
-    ```
+}
+```
 ___
 For preserve state livedata, we can do:
 ___
 * Using saveStateHandle passed as parameter (option 1) 
 ```kotlin
-    class MainViewModel(private val state: SavedStateHandle) : ViewModel() {
-        
-        private val _count = MutableLiveData(state["count"] ?: 0)
-        val count: LiveData<Int> get() = _count
-    
-    
-        fun incrementCount() {
-            _count.value = _count.value?.plus(1) ?: 1
-            state["count"] = _count.value
-        }
+class MainViewModel(private val state: SavedStateHandle) : ViewModel() {
+
+    private val _count = MutableLiveData(state["count"] ?: 0)
+    val count: LiveData<Int> get() = _count
+
+
+    fun incrementCount() {
+        _count.value = _count.value?.plus(1) ?: 1
+        state["count"] = _count.value
     }
+}
 ```
 * Using saveStateHandle passed as parameter (option 2 - easiest) 
 ```kotlin
-    class MainViewModel(state: SavedStateHandle) : ViewModel() {
-        
-        private val _count = state.getLiveData("count",0)
-        val count: LiveData<Int> get() = _count
-    
-    
-        fun incrementCount() {
-            _count.value = _count.value?.plus(1) ?: 1
-        }
+class MainViewModel(state: SavedStateHandle) : ViewModel() {
+
+    private val _count = state.getLiveData("count",0)
+    val count: LiveData<Int> get() = _count
+
+
+    fun incrementCount() {
+        _count.value = _count.value?.plus(1) ?: 1
     }
+}
 ```
 
 
